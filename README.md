@@ -1,6 +1,6 @@
 # django-rest-api
 
-A Django REST Api ready for deployment.
+A Django REST API ready for deployment
 
 Contains:
 Devops:

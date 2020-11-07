@@ -1,0 +1,58 @@
+### VIRTUAL ENVIRONMENT
+
+# Install virtualenv
+sudo pip3 install virtualenv
+
+# Create, activate and install dependencies in Virtual Environment
+virtualenv venv -p python3.8
+source venv/bin/activate
+pip install -r requirements.txt
+
+--------------------------------------------------------
+
+
+### DJANGO
+# Create project
+django-admin startproject config .
+
+# Create api app for shared code
+python manage.py startapp api
+
+# Run server
+python manage.py runserver 0.0.0.0:8000
+
+--------------------------------------------------------
+
+
+### DOCKER
+# Start containers with build
+docker-compose up --build
+
+# Stop containers
+docker-compose down
+
+# List running containers
+docker ps
+
+# Exec command in container
+docker-compose exec web python manage.py startapp accounts
+
+# Exec bash in container:
+docker exec -it container_id bash
+
+# List images
+docker images
+
+# Delete image (with force -f)
+docker rmi -f image_id
+
+# Delete all containers using the following command:
+docker rm -f $(docker ps -a -q)
+
+# List Volumes:
+docker volume ls
+
+# Delete all volumes using the following command:
+docker volume rm $(docker volume ls -q)
+
+
