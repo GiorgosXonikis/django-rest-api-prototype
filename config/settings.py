@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import json
 from datetime import timedelta
 from pathlib import Path
 
@@ -42,12 +43,13 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Auth
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'dj_rest_auth',
 
     # Apps
     'api',
-    'accounts'
+    'accounts',
+    'registration'
 ]
 
 MIDDLEWARE = [
@@ -114,6 +116,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # Sessions are used to power the Browsable API and the ability to log in and log out of it.
         'rest_framework.authentication.SessionAuthentication',
+
         # JWT Token Auth
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     ],
@@ -172,3 +175,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Email settings
+with open('secrets/email_config.json') as _secrets:
+    secrets = json.load(_secrets)
+
+BACKEND = secrets['BACKEND']
+EMAIL_HOST = secrets['EMAIL_HOST']
+EMAIL_PORT = secrets['EMAIL_PORT']
+EMAIL_USE_TLS = secrets['EMAIL_USE_TLS']
+EMAIL_HOST_USER = secrets['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = secrets['EMAIL_HOST_PASSWORD']
+DEFAULT_FROM_EMAIL = secrets['DEFAULT_FROM_EMAIL']
