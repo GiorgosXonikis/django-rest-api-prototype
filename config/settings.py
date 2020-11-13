@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Auth
-    # 'rest_framework.authtoken',
     'dj_rest_auth',
+    'home_prices_prediction',
 
     # Apps
     'api',
@@ -115,10 +115,10 @@ DATABASES = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # Sessions are used to power the Browsable API and the ability to log in and log out of it.
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication', # UNCOMMENT TO ENABLE AUTHENTICATION
 
         # JWT Token Auth
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+        # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication' # UNCOMMENT TO ENABLE AUTHENTICATION
     ],
 }
 
@@ -177,13 +177,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Email settings
-with open('secrets/email_config.json') as _secrets:
-    secrets = json.load(_secrets)
-
-BACKEND = secrets['BACKEND']
-EMAIL_HOST = secrets['EMAIL_HOST']
-EMAIL_PORT = secrets['EMAIL_PORT']
-EMAIL_USE_TLS = secrets['EMAIL_USE_TLS']
-EMAIL_HOST_USER = secrets['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = secrets['EMAIL_HOST_PASSWORD']
-DEFAULT_FROM_EMAIL = secrets['DEFAULT_FROM_EMAIL']
+# with open('secrets/email_config.json') as _secrets:
+#     secrets = json.load(_secrets)
+#
+# BACKEND = secrets['BACKEND']
+# EMAIL_HOST = secrets['EMAIL_HOST']
+# EMAIL_PORT = secrets['EMAIL_PORT']
+# EMAIL_USE_TLS = secrets['EMAIL_USE_TLS']
+# EMAIL_HOST_USER = secrets['EMAIL_HOST_USER']
+# EMAIL_HOST_PASSWORD = secrets['EMAIL_HOST_PASSWORD']
+# DEFAULT_FROM_EMAIL = secrets['DEFAULT_FROM_EMAIL']

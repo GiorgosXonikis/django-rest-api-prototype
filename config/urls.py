@@ -22,5 +22,6 @@ urlpatterns = [
     # Apps
     path('auth/', include('dj_rest_auth.urls')),
     path('api/registration/', include('registration.urls')),
+    path('api/', include('home_prices_prediction.urls')),
 
 ]
