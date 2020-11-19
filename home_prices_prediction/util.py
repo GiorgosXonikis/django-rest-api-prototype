@@ -7,7 +7,7 @@ __data_columns = None
 __model = None
 
 
-def get_estimated_price(suburb, Type, rooms):
+def get_estimated_price(_district, _rooms, _size):
     """return a random value to test the request"""
     return 200
 

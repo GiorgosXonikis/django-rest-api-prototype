@@ -22,18 +22,18 @@ class GetLocationNames(APIView):
 
 class PredictHomePrice(APIView):
     """
-    Class to GET and Predict Home Price
+    Class to POST and Predict Home Price
     """
 
     @staticmethod
-    def get(request):
-        _location = request.data['suburb']
-        _type = request.data['type']
+    def post(request):
+        _district = request.data['district']
         _rooms = request.data['rooms']
+        _size = request.data['size']
 
         return Response(
             {
-                "estimated_price": util.get_estimated_price(_location, _type, _location)
+                "estimated_price": util.get_estimated_price(_district, _rooms, _size)
             },
             status=status.HTTP_200_OK
         )
