@@ -15,11 +15,17 @@ pip install -r requirements.txt
 # Create project
 django-admin startproject config .
 
-# Create api app for shared code
-python manage.py startapp api
+# Create app for shared code
+python manage.py startapp app_name
 
 # Run server
 python manage.py runserver 0.0.0.0:8000
+
+# Create admin account
+python manage.py createsuperuser
+
+# Migrate changes to database
+python manage.py migrate
 
 --------------------------------------------------------
 
