@@ -26,10 +26,10 @@ class PredictHomePrice(APIView):
     """
 
     @staticmethod
-    def post(request):
-        _district = request.data['district']
-        _rooms = request.data['rooms']
-        _size = request.data['size']
+    def get(request):
+        _district = request.query_params['district']
+        _rooms = request.query_params['rooms']
+        _size = request.query_params['size']
 
         return Response(
             {
