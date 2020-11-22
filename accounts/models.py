@@ -18,7 +18,8 @@ class UserProfile(models.Model):
     sex = models.CharField(max_length=6, choices=SEX_CHOICES, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
     bio = models.CharField(max_length=500, blank=True)
-    city = models.CharField(max_length=30, blank=True)
+    languages = models.CharField(max_length=500, blank=True)
+    location = models.CharField(max_length=30, blank=True)
     phone = models.CharField(null=True, blank=True, max_length=30)
     avatar = models.ImageField(null=True, blank=True)
     code = models.CharField(

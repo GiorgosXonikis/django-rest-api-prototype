@@ -20,7 +20,9 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '(s!r05*)gzjkq46=ai!b@ybqml90sdl82z)4_)i#xj)!8zv)rt'
+with open('secrets/django_secret_key.json') as _django_secret_key:
+    django_secrets = json.load(_django_secret_key)
+SECRET_KEY = django_secrets['DJANGO_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -137,7 +139,9 @@ JWT_AUTH_COOKIE = 'active-citizen-auth-cookie'
 JWT_AUTH_HTTPONLY = True
 
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer'
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer',
+    'PASSWORD_RESET_SERIALIZER': 'accounts.serializers.CustomPasswordResetSerializer'
+
 }
 
 # Password validation
@@ -187,3 +191,6 @@ EMAIL_USE_TLS = secrets['EMAIL_USE_TLS']
 EMAIL_HOST_USER = secrets['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = secrets['EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = secrets['DEFAULT_FROM_EMAIL']
+
+# DEBUG the email in console
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
