@@ -9,8 +9,6 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework.generics import get_object_or_404
 
-from config import settings
-
 User = get_user_model()
 
 
@@ -37,7 +35,7 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
 
 class CustomPasswordResetSerializer(PasswordResetSerializer):
     """
-    Override Serializer's email options thr reset e-mail.
+    Override Serializer's email options for the reset e-mail
     """
 
     def get_email_options(self):

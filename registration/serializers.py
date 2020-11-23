@@ -6,6 +6,8 @@ from django.core.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework.validators import UniqueValidator
 from django.template import loader
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
 
 
 User = get_user_model()
@@ -37,7 +39,10 @@ class RegistrationSerializer(serializers.Serializer):
     def send_registration_email(email, code):
         template = loader.get_template('registration_email.html')
         subject = "Your Active Citizen Registration"
-        context = {'code': code}
+        context = {
+            'code_encoded': urlsafe_base64_encode(force_bytes(code)),
+            'email_encoded': urlsafe_base64_encode(force_bytes(email))
+        }
         template = template.render(context)
         message = EmailMessage(subject, template, to=[email])
         message.content_subtype = 'html'
@@ -58,20 +63,26 @@ class RegistrationSerializer(serializers.Serializer):
 
 
 class RegistrationVerificationSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    email = serializers.CharField()
     validation_code = serializers.CharField()
 
     def validate(self, attrs):
-        email = attrs.get('email')
-        user = get_object_or_404(User, email=email)
-        if attrs.get('validation_code') != user.user_profile.code or user.is_active:
+        _email = urlsafe_base64_decode(attrs.get('email')).decode()
+        _validation_code = urlsafe_base64_decode(attrs.get('validation_code')).decode()
+        user = get_object_or_404(User, email=_email)
+        if _validation_code != user.user_profile.code:
             raise serializers.ValidationError({
-                'code': 'Invalid code or user is already validated!',
+                'code_error': 'Invalid validation code',
+            })
+        if user.is_active:
+            raise serializers.ValidationError({
+                'active_error': 'User is already active',
             })
         return attrs
 
     def save(self, validated_data):
-        user = get_object_or_404(User, email=validated_data['email'])
+        _email = urlsafe_base64_decode(validated_data['email']).decode()
+        user = get_object_or_404(User, email=_email)
         user.is_active = True
         user.save()
         return user
