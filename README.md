@@ -1,6 +1,6 @@
-# django-rest-api
 
-A Django REST API ready for deployment
+
+## Django REST API prototype
 
 Contains:
 Devops:
